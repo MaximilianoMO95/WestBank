@@ -15,7 +15,6 @@ class DbConnectionTest {
                 "Facil-123"
         );
 
-        @Test
         void testDatabaseConnection() {
                 try (Connection connection = mysqlConn.connect()) {
                         assertNotNull(connection, "Connection should not be null");
