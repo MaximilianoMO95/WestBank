@@ -17,6 +17,8 @@ CREATE TABLE IF NOT EXISTS cliente (
     tipo_cuenta         VARCHAR(40) NOT NULL
 );
 
+INSERT INTO historial_transf (cuenta_origen, monto, cuenta_destino) VALUES (123456789, 1000, 123456780);
+
 CREATE TABLE IF NOT EXISTS historial_transf (
         id_transaccion INT AUTO_INCREMENT PRIMARY KEY,
 
@@ -30,3 +32,6 @@ ALTER TABLE cliente ADD INDEX idx_numero_cuenta (numero_cuenta);
 ALTER TABLE historial_transf
     ADD FOREIGN KEY (cuenta_origen) REFERENCES cliente(numero_cuenta),
     ADD FOREIGN KEY (cuenta_destino) REFERENCES cliente(numero_cuenta);
+
+INSERT INTO cliente (id, run, dv, clave, nombre, ap_materno, ap_paterno, tel, comuna, domicilio, numero_cuenta, saldo_cuenta, tipo_cuenta)
+        VALUES (1,"19243716", 2, "Ind951011", "asdsad", "asdasd", "asdasd", 1212121212, "asdasd", "asdasd", 123456789, 10000, "corriente");

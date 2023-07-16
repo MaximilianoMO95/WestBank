@@ -22,6 +22,7 @@ public class MainFrame extends JFrame {
                 TransferHistoryView transferHistory = new TransferHistoryView();
 
                 new TransferController(transfer);
+                new TransferHistoryController(transferHistory);
 
                 setLayout(cardLayout);
                 setJMenuBar(navBar);
