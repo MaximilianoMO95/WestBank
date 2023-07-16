@@ -1,5 +1,6 @@
 package westbank.interfaz;
 
+import westbank.acceso.*;
 import java.awt.*;
 import javax.swing.*;
 
@@ -17,19 +18,21 @@ public class MainFrame extends JFrame {
                 HomeView home = new HomeView();
                 NavBarView navBar = new NavBarView();
                 LoginView login = new LoginView();
-                TransferirView transferir = new TransferirView();
+                TransferView transfer = new TransferView();
                 TransferHistoryView transferHistory = new TransferHistoryView();
+
+                new TransferController(transfer);
 
                 setLayout(cardLayout);
                 setJMenuBar(navBar);
                 
                 add(login, "login");
                 add(home, "home");
-                add(transferir, "transferir");
+                add(transfer, "transfer");
                 add(transferHistory, "transferHistory");
                 
                 navBar.showHome(e -> cardLayout.show(MainFrame.this.getContentPane(), "home"));
-                navBar.showTransferir(e -> cardLayout.show(MainFrame.this.getContentPane(), "transferir"));
+                navBar.showTransferir(e -> cardLayout.show(MainFrame.this.getContentPane(), "transfer"));
                 navBar.showHistorialTransferencias(e -> cardLayout.show(MainFrame.this.getContentPane(), "transferHistory"));
                 
                 ImageIcon imageIcon = new ImageIcon("src/main/java/westbank/assets/favicon.png");

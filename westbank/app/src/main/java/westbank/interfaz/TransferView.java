@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
-public class TransferirView extends JPanel {
+public class TransferView extends JPanel {
 
         private String srcAccountNumber = "undefined";
         private JLabel titleLabel;
@@ -15,7 +15,7 @@ public class TransferirView extends JPanel {
         private JTextField transferAmountField;
         private JButton transferButton;
 
-        public TransferirView() {
+        public TransferView() {
                 setLayout(new GridBagLayout());
                 GridBagConstraints gbc = new GridBagConstraints();
 

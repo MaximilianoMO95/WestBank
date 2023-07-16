@@ -160,4 +160,13 @@ public class SqlClients extends MysqlConnect {
 
                 return success;
         }
+
+        private boolean isCurrentAccount(Client client) {
+                Account account = client.getAccount();
+                if (account.getDescription().equals("Corriente")) {
+                        return true;
+                }
+
+                return false;
+        }
 }
