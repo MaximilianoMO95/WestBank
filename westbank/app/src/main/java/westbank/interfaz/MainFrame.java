@@ -68,7 +68,9 @@ public class MainFrame extends JFrame {
             }
         });
 
-        navBar.exitApp(e -> System.exit(0));
+         navBar.exitApp(e -> {
+         JOptionPane.showMessageDialog(MainFrame.this, "Has salido de la aplicación", "Salir", JOptionPane.INFORMATION_MESSAGE);
+         System.exit(0); });
 
         ImageIcon imageIcon = new ImageIcon("src/main/java/westbank/assets/favicon.png");
         setIconImage(imageIcon.getImage());
