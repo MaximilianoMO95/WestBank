@@ -4,6 +4,7 @@ import westbank.negocio.TransferHistory;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -17,25 +18,18 @@ public class TransferHistoryView extends JPanel {
         private JLabel noDataLabel;
 
         public TransferHistoryView() {
-                super(new GridBagLayout());
+                super(new BorderLayout());
 
-                // Set up the grid bag constraints
-                GridBagConstraints gbc = new GridBagConstraints();
-                gbc.gridx = 0;
-                gbc.gridy = 0;
-                gbc.insets = new Insets(6, 6, 6, 6);
-                gbc.fill = GridBagConstraints.BOTH;
-
-                noDataLabel = new JLabel("0 Transferencias Para Mostrar");
+                noDataLabel = new JLabel("Historial Vacio");
                 noDataLabel.setFont(noDataLabel.getFont().deriveFont(Font.BOLD, 20f));
                 noDataLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                add(noDataLabel, gbc);
+                add(noDataLabel, BorderLayout.CENTER);
                 noDataLabel.setVisible(false);
 
                 Field[] fields = TransferHistory.class.getFields();
                 String[] fieldNames = new String[fields.length];
                 for (int i = 0; i < fields.length; i++) {
-                        fieldNames[i] = fields[i].getName();
+                        fieldNames[i] = convertToSnakeCase(fields[i].getName());
                 }
                 tableModel = new DefaultTableModel(fieldNames, 0);
 
@@ -43,9 +37,15 @@ public class TransferHistoryView extends JPanel {
                 table.setFont(table.getFont().deriveFont(Font.PLAIN));
                 table.setRowHeight(30);
 
+                // Center align the data in the table cells
+                DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+                centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+                for (int i = 0; i < table.getColumnCount(); i++) {
+                        table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+                }
+
                 scrollPane = new JScrollPane(table);
-                gbc.gridy++;
-                add(scrollPane, gbc);
+                add(scrollPane, BorderLayout.CENTER);
                 scrollPane.setVisible(false);
         }
 
@@ -77,5 +77,15 @@ public class TransferHistoryView extends JPanel {
 
         public void clearTable() {
                 tableModel.setRowCount(0);
+        }
+
+        private static String convertToSnakeCase(String input) {
+                // Use regular expression to insert an underscore before each capital letter
+                String snakeCase = input.replaceAll("(.)(\\p{Upper})", "$1_$2");
+
+                // Convert the result to lowercase
+                snakeCase = snakeCase.toLowerCase();
+
+                return snakeCase;
         }
 }

@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 
 public class TransferView extends JPanel {
 
-        private String srcAccountNumber = "undefined";
         private JLabel titleLabel;
         private JLabel srcAccountLabel;
         private JLabel destAccountLabel;
@@ -31,7 +30,7 @@ public class TransferView extends JPanel {
 
                 // Número de cuenta de origen
                 gbc.insets = new Insets(10, 10, 60, 10);
-                srcAccountLabel = new JLabel("Este es tu numero de cuenta: " + srcAccountNumber);
+                srcAccountLabel = new JLabel("Este es tu numero de cuenta: undefined");
                 srcAccountLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 18f));
                 gbc.gridy = 1;
                 gbc.gridwidth = 2;
@@ -80,7 +79,7 @@ public class TransferView extends JPanel {
         }
 
         public void setSrcAccountNumber(int srcAccountNumber) {
-                this.srcAccountNumber = Integer.toString(srcAccountNumber);
+                srcAccountLabel.setText("Este es tu numero de cuenta: " + Integer.toString(srcAccountNumber));
         }
 
         public String getDestAccountField() {

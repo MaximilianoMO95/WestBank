@@ -11,13 +11,15 @@ public class TransferController {
         private Client srcClient;
         private Client dstClient;
 
-        public TransferController(TransferView transferV) {
+        public TransferController(TransferView transferV, Client client) {
                 this.transferView = transferV;
                 this.sqlClients = new SqlClients();
                 this.sqlTransferHist = new SqlTransferHistory();
+                this.srcClient = client;
+                this.transferView.setSrcAccountNumber(client.getAccount().getAccountNumber());
 
                 this.transferView.transfer(e -> {
-                        String srcAccountNum = "123456789";
+                        int srcAccountNum = client.getAccount().getAccountNumber();
                         String dstAccountNum = transferView.getDestAccountField();
 
                         if (dstAccountNum.isEmpty()) {
@@ -26,9 +28,11 @@ public class TransferController {
                          } else if (!Validations.validateAccountNumber(dstAccountNum)) {
                                 transferView.displayErrorMessage("cuenta de destino invalida");
                                 return;
+                        } else if (Integer.toString(srcAccountNum).equals(dstAccountNum)) {
+                                transferView.displayErrorMessage("cuenta de destino debe ser diferente a la de origen");
+                                return;
                         }
 
-                        srcClient = sqlClients.searchByAccountNumber(srcAccountNum);
                         dstClient = sqlClients.searchByAccountNumber(dstAccountNum);
 
                         if (dstClient == null) {
@@ -53,10 +57,9 @@ public class TransferController {
                         }
 
                         if (sqlClients.transfer(srcClient, dstClient, amount)) {
-                                int srcAccount = Integer.parseInt(srcAccountNum);
                                 int destAccount = Integer.parseInt(dstAccountNum);
 
-                                TransferHistory transferHist = new TransferHistory(srcAccount, amount, destAccount);
+                                TransferHistory transferHist = new TransferHistory(srcAccountNum, amount, destAccount);
                                 sqlTransferHist.newTransfer(transferHist);
                                 
                                 srcClient.getAccount().moneyTransfer(amount, dstClient.getAccount());
@@ -71,7 +74,9 @@ public class TransferController {
 
         private boolean isCurrentAccount(Client client) {
                 Account account = client.getAccount();
-                if (account.getDescription().equals("Corriente")) {
+                String description = account.getDescription().toUpperCase();
+
+                if (description.equals("CORRIENTE")) {
                         return true;
                 }
 

@@ -8,8 +8,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
-
 public class LoginController {
     private LoginView loginView;
     private LoginDAO loginDAO;
@@ -46,8 +44,7 @@ public class LoginController {
     private void showHomeView(Client client) {
         // Crear la vista de inicio y pasar los datos del cliente
         HomeView homeView = new HomeView();
-        homeView.setClientName(client.getName());
-        homeView.setBalance(client.getAccount().checkBalance());
+        homeView.setClient(client);
 
         // Crear el JFrame principal y agregar la vista de inicio
         JFrame mainFrame = new JFrame("West Bank");

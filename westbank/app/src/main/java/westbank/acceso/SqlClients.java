@@ -134,6 +134,46 @@ public class SqlClients extends MysqlConnect {
                 return client;
         }
 
+        @Nullable
+        public Client searchByAccountNumber(int number) {
+                String query = "SELECT * FROM cliente WHERE numero_cuenta = ?";
+                Client client = null;
+
+                try {
+                        Connection conn = connect();
+                        PreparedStatement ps = conn.prepareStatement(query);
+
+                        ps.setInt(1,number);
+                        ResultSet result = ps.executeQuery();
+
+                        if (result.next()) {
+                                String run = Integer.toString(result.getInt("run"));
+                                int id = result.getInt("id");
+                                String dv = result.getString("dv");
+                                String clave = result.getString("clave");
+                                String name = result.getString("nombre");
+                                String ap_paterno = result.getString("ap_paterno");
+                                String ap_materno = result.getString("ap_materno");
+                                String tel = result.getString("tel");
+                                String address = result.getString("domicilio");
+                                String comuna = result.getString("comuna");
+
+                                String tipoCuenta = result.getString("tipo_cuenta");
+                                int saldo = result.getInt("saldo_cuenta");
+                                int numeroCuenta = result.getInt("numero_cuenta");
+
+                                Account account = new Account(numeroCuenta, saldo, tipoCuenta);
+
+                                client = new Client(id, run, dv, clave, name, ap_paterno, ap_materno, address, comuna, tel, account);
+                        }
+
+                } catch (SQLException e) {
+                        Logger.getLogger(SqlClients.class.getName()).log(Level.SEVERE, null, e);
+                }
+
+                return client;
+        }
+
         public boolean transfer(Client srcClient, Client dstClient, int amount) {
                 String query1 = "UPDATE cliente SET saldo_cuenta = saldo_cuenta - ? WHERE id = ?";
                 String query2 = "UPDATE cliente SET saldo_cuenta = saldo_cuenta + ? WHERE id = ?";

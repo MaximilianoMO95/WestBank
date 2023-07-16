@@ -12,6 +12,7 @@ public class MainFrame extends JFrame {
     private CardLayout cardLayout;
     private LoginView loginView;
     private LoginDAO loginDAO;
+    private Client client;
 
     public MainFrame() {
         super("West Bank");
@@ -25,19 +26,20 @@ public class MainFrame extends JFrame {
         TransferView transferir = new TransferView();
         TransferHistoryView transferHistory = new TransferHistoryView();
 
-        new TransferController(transferir);
-        new TransferHistoryController(transferHistory);
-
         setLayout(cardLayout);
         getContentPane().add(loginView, "login");
         setJMenuBar(navBar);
+        navBar.setVisible(false);
 
         add(loginView, "login");
         add(home, "home");
         add(transferir, "transferir");
         add(transferHistory, "transferHistory");
 
-        navBar.showHome(e -> cardLayout.show(MainFrame.this.getContentPane(), "home"));
+        navBar.showHome(e ->  {
+                home.updateData();
+                cardLayout.show(MainFrame.this.getContentPane(), "home");
+        });
         navBar.showTransferir(e -> cardLayout.show(MainFrame.this.getContentPane(), "transferir"));
         navBar.showHistorialTransferencias(e -> cardLayout.show(MainFrame.this.getContentPane(), "transferHistory"));
 
@@ -47,13 +49,18 @@ public class MainFrame extends JFrame {
             String password = loginView.getPassword();
 
             // Autenticar al usuario utilizando el LoginDAO
-            Client client = loginDAO.authenticate(run, password);
+            client = loginDAO.authenticate(run, password);
 
             if (client != null) {
                 // Autenticación exitosa, mostrar la vista de inicio
-                home.setClientName(client.getName());
-                home.setBalance(client.getAccount().checkBalance());
+                home.setClient(client);
+                home.updateData();
                 cardLayout.show(MainFrame.this.getContentPane(), "home");
+                navBar.setVisible(true);
+
+                new TransferController(transferir, client);
+                new TransferHistoryController(transferHistory, navBar, client);
+
             } else {
                 // Autenticación fallida, mostrar mensaje de error
                 JOptionPane.showMessageDialog(loginView, "Credenciales inválidas", "Error", JOptionPane.ERROR_MESSAGE);
