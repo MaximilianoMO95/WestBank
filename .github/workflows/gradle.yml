@@ -28,5 +28,7 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
+    - name: Change directory to westbank
+      run: cd westbank
     - name: Build with Gradle
       run: cd westbank && ./gradlew build
