@@ -9,6 +9,12 @@ public class TransferHistory {
         public int cuentaDestino;
         public Date fechaHora;
 
+        public TransferHistory(int srcAccount, int amount, int destAccount) {
+                this.cuentaOrigen = srcAccount;
+                this.monto = amount;
+                this.cuentaDestino = destAccount;
+        }
+
         public TransferHistory(int id, int srcAccount, int amount, int destAccount, Date timestamp) {
                 this.idTransaccion = id;
                 this.cuentaOrigen = srcAccount;

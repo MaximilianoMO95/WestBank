@@ -7,10 +7,12 @@ import westbank.interfaz.TransferView;
 public class TransferController {
         private TransferView transferView;
         private SqlClients sqlClients;
+        private SqlTransferHistory sqlTransferHist;
 
         public TransferController(TransferView transferV) {
                 this.transferView = transferV;
                 this.sqlClients = new SqlClients();
+                this.sqlTransferHist = new SqlTransferHistory();
 
                 this.transferView.transfer(e -> {
                         String srcAccountNum = "123";
@@ -49,6 +51,12 @@ public class TransferController {
                         }
 
                         if (sqlClients.transfer(srcClient, dstClient, amount)) {
+                                int srcAccount = Integer.parseInt(srcAccountNum);
+                                int destAccount = Integer.parseInt(dstAccountNum);
+
+                                TransferHistory transferHist = new TransferHistory(srcAccountNum, amount, destAccount);
+                                sqlTransferHist.newTransfer(transferHist);
+                                
                                 srcClient.getAccount().moneyTransfer(amount, dstClient.getAccount());
                                 transferView.displayMessage("Transferencia realizada con éxito. Nuevo saldo: " + srcClient.getAccount().checkBalance());
                         } else {
