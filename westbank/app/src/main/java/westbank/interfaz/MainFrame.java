@@ -22,8 +22,11 @@ public class MainFrame extends JFrame {
 
         HomeView home = new HomeView();
         NavBarView navBar = new NavBarView();
-        TransferirView transferir = new TransferirView();
+        TransferView transferir = new TransferView();
         TransferHistoryView transferHistory = new TransferHistoryView();
+
+        new TransferController(transferir);
+        new TransferHistoryController(transferHistory);
 
         setLayout(cardLayout);
         getContentPane().add(loginView, "login");

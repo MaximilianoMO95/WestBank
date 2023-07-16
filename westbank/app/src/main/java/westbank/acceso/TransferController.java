@@ -8,6 +8,8 @@ public class TransferController {
         private TransferView transferView;
         private SqlClients sqlClients;
         private SqlTransferHistory sqlTransferHist;
+        private Client srcClient;
+        private Client dstClient;
 
         public TransferController(TransferView transferV) {
                 this.transferView = transferV;
@@ -15,7 +17,7 @@ public class TransferController {
                 this.sqlTransferHist = new SqlTransferHistory();
 
                 this.transferView.transfer(e -> {
-                        String srcAccountNum = "123";
+                        String srcAccountNum = "123456789";
                         String dstAccountNum = transferView.getDestAccountField();
 
                         if (dstAccountNum.isEmpty()) {
@@ -26,8 +28,8 @@ public class TransferController {
                                 return;
                         }
 
-                        Client srcClient = sqlClients.searchByAccountNumber(srcAccountNum);
-                        Client dstClient = sqlClients.searchByAccountNumber(dstAccountNum);
+                        srcClient = sqlClients.searchByAccountNumber(srcAccountNum);
+                        dstClient = sqlClients.searchByAccountNumber(dstAccountNum);
 
                         if (dstClient == null) {
                                 transferView.displayErrorMessage("Cuenta de destino no encontrada");

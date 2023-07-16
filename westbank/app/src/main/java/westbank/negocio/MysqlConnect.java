@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 public class MysqlConnect {
-        private String DB_URL = "jdbc:mysql://127.0.0.1:3306/westbank";
+        private String DB_URL = "jdbc:mysql://localhost:3306/westbank";
         private String DB_USER = "myuser";
         private String DB_PASSWORD = "mypassword";
 

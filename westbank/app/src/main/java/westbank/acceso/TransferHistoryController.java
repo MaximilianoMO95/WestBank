@@ -16,8 +16,8 @@ public class TransferHistoryController {
                 this.sqlClients = new SqlClients();
                 this.sqlTransferHist = new SqlTransferHistory();
 
-                List<TransferHistory> histList = sqlTransferHist.getHistoryBySrcAccount(123456789);
-                transferView.displayData(histList);
+                // List<TransferHistory> histList = sqlTransferHist.getHistoryBySrcAccount(123456789);
+                // transferView.displayData(histList);
         }
 }
 
