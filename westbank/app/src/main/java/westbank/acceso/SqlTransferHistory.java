@@ -58,7 +58,7 @@ public class SqlTransferHistory extends MysqlConnect {
                                 int srcAccount = result.getInt("cuenta_origen");
                                 int amount = result.getInt("monto");
                                 int destAccount = result.getInt("cuenta_destino");
-                                Date timestamp = result.getDate("fecha_hora");
+                                Date timestamp = result.getTimestamp("fecha_hora");
 
                                 TransferHistory transferHist = new TransferHistory(id, srcAccount, amount, destAccount, timestamp);
                                 histList.add(transferHist);

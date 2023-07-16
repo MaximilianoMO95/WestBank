@@ -1,6 +1,8 @@
 # TODOS
 
-- [ ] Crear tablas para base de datos
+- [ ] Agregar dv a run en login
+- [ ] Poblar tablas
 - [ ] Crear validacion para password
-- [ ] Crear sql queries
-- [ ] Crear controllers
+- [x] Crear tablas para base de datos
+- [x] Crear sql queries
+- [x] Crear controllers

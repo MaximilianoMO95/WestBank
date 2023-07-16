@@ -3,11 +3,10 @@ package westbank.interfaz;
 import westbank.negocio.TransferHistory;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.lang.reflect.Field;
 
@@ -18,13 +17,20 @@ public class TransferHistoryView extends JPanel {
         private JLabel noDataLabel;
 
         public TransferHistoryView() {
-                super(new BorderLayout());
+                super(new GridBagLayout());
+
+                GridBagConstraints constraints = new GridBagConstraints();
+                constraints.gridx = 0;
+                constraints.gridy = 0;
+                constraints.fill = GridBagConstraints.BOTH;
 
                 noDataLabel = new JLabel("Historial Vacio");
                 noDataLabel.setFont(noDataLabel.getFont().deriveFont(Font.BOLD, 20f));
-                noDataLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                add(noDataLabel, BorderLayout.CENTER);
                 noDataLabel.setVisible(false);
+                add(noDataLabel, constraints);
+
+                constraints.gridy++;
+                constraints.weightx = constraints.weighty = 1.0;
 
                 Field[] fields = TransferHistory.class.getFields();
                 String[] fieldNames = new String[fields.length];
@@ -45,14 +51,16 @@ public class TransferHistoryView extends JPanel {
                 }
 
                 scrollPane = new JScrollPane(table);
-                add(scrollPane, BorderLayout.CENTER);
                 scrollPane.setVisible(false);
+                add(scrollPane, constraints);
         }
 
         public void displayData(List<TransferHistory> historyList) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+
                 if (historyList == null || historyList.isEmpty()) {
-                        scrollPane.setVisible(false);
                         noDataLabel.setVisible(true);
+                        scrollPane.setVisible(false);
                 } else {
                         noDataLabel.setVisible(false);
                         scrollPane.setVisible(true);
@@ -64,7 +72,7 @@ public class TransferHistoryView extends JPanel {
                                         history.cuentaOrigen,
                                         history.getMonto(),
                                         history.cuentaDestino,
-                                        history.getFechaHora()
+                                        dateFormat.format(history.getFechaHora())
                                 };
 
                                 tableModel.addRow(rowData);
