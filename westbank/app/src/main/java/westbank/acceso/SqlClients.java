@@ -30,6 +30,7 @@ public class SqlClients extends MysqlConnect {
                         if (result.next()) {
                                 int id = result.getInt("id");
                                 String dv = result.getString("dv");
+                                String clave = result.getString("clave");
                                 String name = result.getString("nombre");
                                 String ap_paterno = result.getString("ap_paterno");
                                 String ap_materno = result.getString("ap_materno");
@@ -43,7 +44,7 @@ public class SqlClients extends MysqlConnect {
 
                                 Account account = new Account(numeroCuenta, saldo, tipoCuenta);
 
-                                client = new Client(id, run, dv, name, ap_paterno, ap_materno, address, comuna, tel, account);
+                                client = new Client(id, run, dv, clave, name, ap_paterno, ap_materno, address, comuna, tel, account);
                         }
 
                 } catch (SQLException e) {
@@ -69,6 +70,7 @@ public class SqlClients extends MysqlConnect {
 
                         if (result.next()) {
                                 int id = result.getInt("id");
+                                String clave = result.getString("clave");
                                 String name = result.getString("nombre");
                                 String ap_paterno = result.getString("ap_paterno");
                                 String ap_materno = result.getString("ap_materno");
@@ -82,7 +84,7 @@ public class SqlClients extends MysqlConnect {
 
                                 Account account = new Account(numeroCuenta, saldo, tipoCuenta);
 
-                                client = new Client(id, run, dv, name, ap_paterno, ap_materno, address, comuna, tel, account);
+                                client = new Client(id, run, dv, clave,  name, ap_paterno, ap_materno, address, comuna, tel, account);
                         }
 
                 } catch (SQLException e) {
@@ -108,6 +110,7 @@ public class SqlClients extends MysqlConnect {
                                 String run = Integer.toString(result.getInt("run"));
                                 int id = result.getInt("id");
                                 String dv = result.getString("dv");
+                                String clave = result.getString("clave");
                                 String name = result.getString("nombre");
                                 String ap_paterno = result.getString("ap_paterno");
                                 String ap_materno = result.getString("ap_materno");
@@ -121,7 +124,7 @@ public class SqlClients extends MysqlConnect {
 
                                 Account account = new Account(numeroCuenta, saldo, tipoCuenta);
 
-                                client = new Client(id, run, dv, name, ap_paterno, ap_materno, address, comuna, tel, account);
+                                client = new Client(id, run, dv, clave, name, ap_paterno, ap_materno, address, comuna, tel, account);
                         }
 
                 } catch (SQLException e) {
@@ -160,13 +163,5 @@ public class SqlClients extends MysqlConnect {
 
                 return success;
         }
-
-        private boolean isCurrentAccount(Client client) {
-                Account account = client.getAccount();
-                if (account.getDescription().equals("Corriente")) {
-                        return true;
-                }
-
-                return false;
-        }
 }
+
