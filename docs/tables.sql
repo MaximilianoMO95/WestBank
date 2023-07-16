@@ -32,4 +32,7 @@ ALTER TABLE historial_transf
     ADD FOREIGN KEY (cuenta_destino) REFERENCES cliente(numero_cuenta);
 
 INSERT INTO cliente (id, run, dv, clave, nombre, ap_materno, ap_paterno, tel, comuna, domicilio, numero_cuenta, saldo_cuenta, tipo_cuenta)
-        VALUES (1,"19243716", 2, "Ind951011", "asdsad", "asdasd", "asdasd", 1212121212, "asdasd", "asdasd", 123456789, 10000, "corriente");
+    VALUES (1, "12345678", 2, "Ind951011", "homero", "J", "Simpson", 1212121212, "springfield", "av. siempre viva", 123456789, 10000, "corriente");
+
+INSERT INTO cliente (id, run, dv, clave, nombre, ap_materno, ap_paterno, tel, comuna, domicilio, numero_cuenta, saldo_cuenta, tipo_cuenta)
+    VALUES (2, "98765432", 5, "Ind921025", "Philip", "fry", "J.", 9898989898, "new york", "planet express", 987654321, 5000, "corriente");
