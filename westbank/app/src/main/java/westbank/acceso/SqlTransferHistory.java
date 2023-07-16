@@ -46,7 +46,8 @@ public class SqlTransferHistory extends MysqlConnect {
 
                 String query = "SELECT * FROM historial_transf WHERE cuenta_origen = ?;";
 
-                 Connection conn = connect();
+                try {
+                        Connection conn = connect();
                         PreparedStatement ps = conn.prepareStatement(query);
 
                         ps.setInt(1, srcAccountNumber);
@@ -57,7 +58,7 @@ public class SqlTransferHistory extends MysqlConnect {
                                 int srcAccount = result.getInt("cuenta_origen");
                                 int amount = result.getInt("monto");
                                 int destAccount = result.getInt("cuenta_destino");
-                                Date timestamp = result.getInt("fecha_hora");
+                                Date timestamp = result.getDate("fecha_hora");
 
                                 TransferHistory transferHist = new TransferHistory(id, srcAccount, amount, destAccount, timestamp);
                                 histList.add(transferHist);

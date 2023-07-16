@@ -54,7 +54,7 @@ public class TransferController {
                                 int srcAccount = Integer.parseInt(srcAccountNum);
                                 int destAccount = Integer.parseInt(dstAccountNum);
 
-                                TransferHistory transferHist = new TransferHistory(srcAccountNum, amount, destAccount);
+                                TransferHistory transferHist = new TransferHistory(srcAccount, amount, destAccount);
                                 sqlTransferHist.newTransfer(transferHist);
                                 
                                 srcClient.getAccount().moneyTransfer(amount, dstClient.getAccount());
