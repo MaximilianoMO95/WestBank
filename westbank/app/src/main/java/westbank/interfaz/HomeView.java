@@ -2,52 +2,56 @@ package westbank.interfaz;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class HomeView extends JPanel {
-        private String clientName = "undefined";
-        private String balance = "0";
+    private JLabel titleLabel;
+    private JLabel balanceLabel;
 
-        public HomeView() {
-                setLayout(new BorderLayout());
+    public HomeView() {
+        setLayout(new BorderLayout());
+        setPreferredSize(new Dimension(400, 300));
+        setBackground(Color.WHITE);
 
-                // Main panel
-                JPanel mainPanel = new JPanel(new GridBagLayout());
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        mainPanel.setBackground(Color.WHITE);
 
-                // Logo panel
-                JPanel logoPanel = new JPanel(new GridBagLayout());
-                ImageIcon logoIcon = new ImageIcon("src/main/java/westbank/assets/favicon.png");
-                JLabel logoLabel = new JLabel(logoIcon);
-                logoPanel.add(logoLabel);
+        JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        logoPanel.setOpaque(false); // Establecer el panel del logo como transparente
+        ImageIcon logoIcon = new ImageIcon("src/main/java/westbank/assets/favicon.png");
+        JLabel logoLabel = new JLabel(logoIcon);
+        logoPanel.add(logoLabel);
 
-                // Text panel
-                JPanel textPanel = new JPanel();
-                textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
-                JLabel titleLabel = new JLabel("Bienvenido(a): " + clientName);
-                JLabel balanceLabel = new JLabel("Tu saldo es: " + balance);
-                titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 26f));
-                balanceLabel.setFont(balanceLabel.getFont().deriveFont(Font.BOLD, 23f));
+        JPanel textPanel = new JPanel(new GridBagLayout());
+        textPanel.setBackground(Color.WHITE);
 
-                textPanel.add(titleLabel);
-                textPanel.add(balanceLabel);
+        titleLabel = new JLabel("Bienvenido(a):");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 26));
 
-                // Set alignment for logo and text panels
-                GridBagConstraints gbc = new GridBagConstraints();
-                gbc.gridx = 0;
-                gbc.gridy = 0;
-                gbc.insets = new Insets(10, 10, 100, 10);
-                gbc.anchor = GridBagConstraints.CENTER;
-                mainPanel.add(logoPanel, gbc);
-                gbc.gridy = 1;
-                mainPanel.add(textPanel, gbc);
+        balanceLabel = new JLabel("Tu saldo es: 0");
+        balanceLabel.setFont(new Font("Arial", Font.BOLD, 23));
 
-                add(mainPanel, BorderLayout.CENTER);
-        }
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(10, 0, 10, 0);
+        textPanel.add(titleLabel, gbc);
 
-        public void setClientName(String name) {
-                this.clientName = name;
-        }
+        gbc.gridy = 1;
+        textPanel.add(balanceLabel, gbc);
 
-        public void setClientName(int balance) {
-                this.balance = Integer.toString(balance);
-        }
+        mainPanel.add(logoPanel);
+        mainPanel.add(textPanel);
+
+        add(mainPanel, BorderLayout.CENTER);
+    }
+
+    public void setClientName(String name) {
+        titleLabel.setText("Bienvenido(a): " + name);
+    }
+
+    public void setBalance(int balance) {
+        balanceLabel.setText("Tu saldo es: " + balance);
+    }
 }
