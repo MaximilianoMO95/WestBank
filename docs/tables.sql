@@ -17,8 +17,6 @@ CREATE TABLE IF NOT EXISTS cliente (
     tipo_cuenta         VARCHAR(40) NOT NULL
 );
 
-INSERT INTO historial_transf (cuenta_origen, monto, cuenta_destino) VALUES (123456789, 1000, 123456780);
-
 CREATE TABLE IF NOT EXISTS historial_transf (
         id_transaccion INT AUTO_INCREMENT PRIMARY KEY,
 
